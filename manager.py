@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from redis import StrictRedis
+from flask_wtf import CSRFProtect
 
 
 class Config(object):
@@ -16,7 +17,8 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 redis_store = StrictRedis(host=Config.REDIS_HOST, port=Config.REDIS_PORT, db=Config.REDIS_NUM)
-
+csrf = CSRFProtect(app)
+# TODO 等待開啓csrf_token验证
 
 @app.route('/')
 def index():
